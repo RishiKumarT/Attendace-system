@@ -4,8 +4,8 @@ from sqlalchemy.orm import sessionmaker
 from db.models import Base
 
 #connection to the database
-#DATABASE_URL = "postgresql+psycopg2://postgres:Mohit@005@localhost:5432/attendance_db"
-DATABASE_URL = "postgresql+psycopg2://postgres:Mohit%40005@localhost:5432/attendance_db"
+# MySQL connection - update username and password if needed
+DATABASE_URL = "mysql+pymysql://root:Mohit%40005@localhost:3306/attendance_db"
 
 
 engine = create_engine(DATABASE_URL)

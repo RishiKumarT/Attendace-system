@@ -1,134 +1,3 @@
-# import streamlit as st
-# import os
-# from utils.db_conn import SessionLocal
-# from db.models import User, Student
-#
-# UPLOAD_DIR = "student_images"
-# os.makedirs(UPLOAD_DIR, exist_ok=True)
-#
-# def add_faculty():
-#     st.subheader("Add Faculty")
-#     uname = st.text_input("Faculty Username")
-#     pwd = st.text_input("Faculty Password", type="password")
-#     if st.button("Save Faculty"):
-#         db = SessionLocal()
-#         faculty = User(username=uname, password=pwd, role="faculty")
-#         db.add(faculty)
-#         db.commit()
-#         db.close()
-#         st.success(f"Faculty {uname} added!")
-#
-# def manage_faculty():
-#     st.subheader("Manage Faculty")
-#     db = SessionLocal()
-#     faculties = db.query(User).filter(User.role=="faculty").all()
-#     fac_names = {f.username: f for f in faculties}
-#     db.close()
-#
-#     if fac_names:
-#         choice = st.selectbox("Select Faculty", list(fac_names.keys()))
-#         faculty = fac_names[choice]
-#
-#         new_uname = st.text_input("Edit Username", value=faculty.username)
-#         new_pwd = st.text_input("Edit Password", value=faculty.password, type="password")
-#
-#         if st.button("Update Faculty"):
-#             db = SessionLocal()
-#             faculty_db = db.query(User).get(faculty.id)
-#             faculty_db.username = new_uname
-#             faculty_db.password = new_pwd
-#             db.commit()
-#             db.close()
-#             st.success(f"Faculty {new_uname} updated!")
-#
-#         if st.button("Remove Faculty"):
-#             db = SessionLocal()
-#             faculty_db = db.query(User).get(faculty.id)
-#             db.delete(faculty_db)
-#             db.commit()
-#             db.close()
-#             st.success(f"Faculty {choice} removed!")
-#
-# def add_student():
-#     st.subheader("Add Student")
-#     name = st.text_input("Student Name")
-#     roll_no = st.text_input("Roll Number")
-#     class_name = st.text_input("Class")
-#     files = st.file_uploader("Upload Images", type=["jpg","jpeg","png"], accept_multiple_files=True)
-#
-#     if st.button("Save Student"):
-#         if not name or not roll_no or not class_name or not files:
-#             st.error("Fill all fields and upload images")
-#             return
-#
-#         db = SessionLocal()
-#         student = Student(name=name, roll_no=roll_no, class_name=class_name)
-#         db.add(student)
-#         db.commit()
-#         db.refresh(student)
-#
-#         folder = os.path.join(UPLOAD_DIR, str(student.id))
-#         os.makedirs(folder, exist_ok=True)
-#         for f in files:
-#             with open(os.path.join(folder, f.name), "wb") as out:
-#                 out.write(f.getbuffer())
-#
-#         student.images_path = folder
-#         db.commit()
-#         db.close()
-#         st.success(f"Student {name} added with {len(files)} images.")
-#
-# def manage_students():
-#     st.subheader("Manage Students")
-#     db = SessionLocal()
-#     students = db.query(Student).all()
-#     stu_names = {f"{s.name} ({s.roll_no})": s for s in students}
-#     db.close()
-#
-#     if stu_names:
-#         choice = st.selectbox("Select Student", list(stu_names.keys()))
-#         student = stu_names[choice]
-#
-#         new_name = st.text_input("Edit Name", value=student.name)
-#         new_roll = st.text_input("Edit Roll", value=student.roll_no)
-#         new_class = st.text_input("Edit Class", value=student.class_name)
-#
-#         if st.button("Update Student"):
-#             db = SessionLocal()
-#             student_db = db.query(Student).get(student.id)
-#             student_db.name = new_name
-#             student_db.roll_no = new_roll
-#             student_db.class_name = new_class
-#             db.commit()
-#             db.close()
-#             st.success(f"Student {new_name} updated!")
-#
-#         if st.button("Remove Student"):
-#             if student.images_path and os.path.exists(student.images_path):
-#                 import shutil
-#                 shutil.rmtree(student.images_path)
-#             db = SessionLocal()
-#             student_db = db.query(Student).get(student.id)
-#             db.delete(student_db)
-#             db.commit()
-#             db.close()
-#             st.success(f"Student {choice} removed!")
-#
-# def main():
-#     if "user" not in st.session_state or st.session_state["user"]["role"] != "admin":
-#         st.error("Access Denied")
-#         return
-#
-#     st.title("👑 Admin Dashboard")
-#     st.header("Faculty Management")
-#     add_faculty()
-#     manage_faculty()
-#
-#     st.write("---")
-#     st.header("Student Management")
-#     add_student()
-#     manage_students()
-
 import streamlit as st
 import os
 
@@ -140,7 +9,6 @@ from db.models import User, Student
 STUDENT_IMG_DIR = "student_images"
 os.makedirs(STUDENT_IMG_DIR, exist_ok=True)
 
-# ----------------- Admin Dashboard -----------------
 def add_faculty():
     st.subheader("Add Faculty")
     uname = st.text_input("Faculty Username", key="add_faculty_username")
@@ -186,7 +54,6 @@ def manage_faculty():
             db.close()
             st.success(f"Faculty {choice} removed!")
 
-# ----------------- Student Management -----------------
 def add_student():
     st.subheader("Add Student")
     name = st.text_input("Student Name", key="add_stu_name")
