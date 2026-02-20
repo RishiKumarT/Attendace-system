@@ -43,5 +43,17 @@ def main():
     if "user" not in st.session_state or st.session_state["user"]["role"] != "student":
         st.error("Access Denied")
         return
-    st.title("🎓 Student Dashboard")
+        
+    # Hide sidebar
+    st.markdown("<style> [data-testid='stSidebar'] { display: none; } </style>", unsafe_allow_html=True)
+    
+    col1, col2 = st.columns([4, 1])
+    with col1:
+        st.title("🎓 Student Dashboard")
+    with col2:
+        if st.button("Logout", type="primary", use_container_width=True):
+            st.session_state.pop("user")
+            st.rerun()
+            
+    st.divider()
     view_attendance()

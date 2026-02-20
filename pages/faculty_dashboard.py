@@ -129,11 +129,36 @@ def main():
         st.error("Access Denied")
         return
     st.title("👨‍🏫 Faculty Dashboard")
-    st.header("Add Student")
-    add_student()
-    st.write("---")
-    st.header("Manage Students")
-    manage_students()
-    st.write("---")
-    st.header("Attendance")
-    post_attendance()
+    
+    # Hide sidebar
+    st.markdown("<style> [data-testid='stSidebar'] { display: none; } </style>", unsafe_allow_html=True)
+    
+    # Top Navbar layout
+    col1, col2, col3, col4 = st.columns([1,2,2,1])
+    with col2:
+        if st.button("🎓 Student Management", use_container_width=True):
+            st.session_state['faculty_nav'] = 'student'
+            st.rerun()
+    with col3:
+        if st.button("📋 Post Attendance", use_container_width=True):
+            st.session_state['faculty_nav'] = 'attendance'
+            st.rerun()
+    with col4:
+        if st.button("Logout", type="primary", use_container_width=True):
+            st.session_state.pop("user")
+            st.rerun()
+            
+    if 'faculty_nav' not in st.session_state:
+        st.session_state['faculty_nav'] = 'student'
+        
+    st.divider()
+    
+    if st.session_state['faculty_nav'] == 'student':
+        st.header("Add Student")
+        add_student()
+        st.write("---")
+        st.header("Manage Students")
+        manage_students()
+    elif st.session_state['faculty_nav'] == 'attendance':
+        st.header("Attendance")
+        post_attendance()

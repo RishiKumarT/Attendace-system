@@ -5,7 +5,7 @@ from db.models import Base
 
 #connection to the database
 # MySQL connection - update username and password if needed
-DATABASE_URL = "mysql+pymysql://root:Mohit%40005@localhost:3306/attendance_db"
+DATABASE_URL = "mysql+pymysql://root:Rishimysql%40134@localhost:3306/attendance_db"
 
 
 engine = create_engine(DATABASE_URL)

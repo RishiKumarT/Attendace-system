@@ -145,10 +145,43 @@ def main():
         st.error("Access Denied")
         return
     st.title("👑 Admin Dashboard")
-    st.header("Faculty Management")
-    add_faculty()
-    manage_faculty()
-    st.write("---")
-    st.header("Student Management")
-    add_student()
-    manage_students()
+    
+    # Hide sidebar for admin
+    st.markdown("<style> [data-testid='stSidebar'] { display: none; } </style>", unsafe_allow_html=True)
+
+    # Top Navbar logic
+    col1, col2, col3, col4, col5 = st.columns([1,1.5,1.5,1.5,1])
+    with col2:
+        if st.button("🏠 Home", use_container_width=True):
+            st.session_state['admin_nav'] = 'home'
+            st.rerun()
+    with col3:
+        if st.button("👨‍🏫 Faculty Mgt", use_container_width=True):
+            st.session_state['admin_nav'] = 'faculty'
+            st.rerun()
+    with col4:
+        if st.button("🎓 Student Mgt", use_container_width=True):
+            st.session_state['admin_nav'] = 'student'
+            st.rerun()
+    with col5:
+        if st.button("Logout", type="primary", use_container_width=True):
+            st.session_state.pop("user")
+            st.rerun()
+            
+    # Default to home
+    if 'admin_nav' not in st.session_state:
+        st.session_state['admin_nav'] = 'home'
+        
+    st.divider()
+
+    if st.session_state['admin_nav'] == 'faculty':
+        st.header("Faculty Management")
+        add_faculty()
+        manage_faculty()
+    elif st.session_state['admin_nav'] == 'student':
+        st.header("Student Management")
+        add_student()
+        manage_students()
+    else:
+        st.header("Welcome to Admin Portal")
+        st.write("Please select an option from the top navigation bar.")
