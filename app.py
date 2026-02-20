@@ -2,7 +2,7 @@ import streamlit as st
 from utils.db_conn import SessionLocal
 from db.models import User
 
-st.set_page_config(page_title="Attendance System", page_icon="🎓", layout="centered")
+st.set_page_config(page_title="Attendance System", layout="centered")
 
 def add_custom_css():
     st.markdown("""
@@ -42,7 +42,7 @@ def login():
     
     with col2:
         # Create a visual container using standard streamlit elements
-        st.markdown("### 🔐 Login")
+        st.markdown("### Login")
         username = st.text_input("Username", placeholder="Enter username")
         password = st.text_input("Password", type="password", placeholder="Enter password")
         

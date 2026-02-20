@@ -49,7 +49,7 @@ def main():
     
     col1, col2 = st.columns([4, 1])
     with col1:
-        st.title("🎓 Student Dashboard")
+        st.title("Student Dashboard")
     with col2:
         if st.button("Logout", type="primary", use_container_width=True):
             st.session_state.pop("user")
